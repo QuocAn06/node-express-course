@@ -26,8 +26,27 @@ app.post('/api/people', (req, res) => {
             msg: "please provide name value"
         };
         return res.status(400).json(result);
-    }else{
+    } else {
         result.person = name;
+    }
+
+    res.status(201).json(result);
+});
+
+app.post('/api/postman/people', (req, res) => {
+    const { name } = req.body;
+    let result = {
+        success: true,
+    }
+    if (!name) {
+        result = {
+            success: false,
+            msg: "please provide name value"
+        };
+
+        return res.status(400).json(result);
+    } else {
+        result.data = [...people, name];
     }
 
     res.status(201).json(result);
