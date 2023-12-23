@@ -1,1 +1,1 @@
-const connectionString = "mongodb+srv://annguyen:<password>@nodeexpressprojects.ckas24k.mongodb.net/?retryWrites=true&w=majority";
+const connectionString = "mongodb+srv://annguyen:dt8LiHhg2Lqd2k0s@nodeexpressprojects.ckas24k.mongodb.net/?retryWrites=true&w=majority";
