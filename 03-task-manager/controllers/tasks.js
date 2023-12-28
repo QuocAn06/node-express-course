@@ -38,7 +38,7 @@ const updateTask = asyncWrapper(async (req, res) => {
     const { id: taskID } = req.params;
     const data = req.body;
     if (data) {
-        const task = await Task.findOneAndUpdate({ _id: taskID }, req?.body, {
+        const task = await Task.findOneAndUpdate({ _id: taskID }, data, {
             new: true,
             runValidators: true
         });
