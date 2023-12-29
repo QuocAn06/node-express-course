@@ -1,15 +1,22 @@
 require('dotenv').config();
 require('express-async-errors');
 
-
 const express = require('express');
 const app = express();
+const rateLimit = require('express-rate-limit');
 
 const connectDB = require('./db/connect');
 const productsRouter = require('./routes/products');
 
 const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // max 100 requests per windowMs
+});
+
+app.use(limiter);
 
 // middleware
 app.use(express.json());
