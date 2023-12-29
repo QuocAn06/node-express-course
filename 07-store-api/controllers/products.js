@@ -1,6 +1,16 @@
+const Product = require('../models/product');
+
 const getAllProductsStatic = async (req, res) => {
-    throw new Error('testing async error');
-    res.status(200).json({ msg: 'products testing route' });
+    const products = await Product.find({
+        name: "entertainment center"
+    });
+
+    const result = {
+        count: products.length,
+        products
+    }
+
+    res.status(200).json(result);
 };
 
 const getAllProducts = async (req, res) => {
@@ -8,6 +18,6 @@ const getAllProducts = async (req, res) => {
 };
 
 module.exports = {
-    getAllProductsStatic, 
+    getAllProductsStatic,
     getAllProducts
 };
