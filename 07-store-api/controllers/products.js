@@ -23,7 +23,7 @@ const getAllProducts = async (req, res) => {
     }
 
     if (company) {
-        queryObject.company = company;
+        queryObject.company = company || '';
     }
 
     if (name) {
@@ -48,7 +48,7 @@ const getAllProducts = async (req, res) => {
         const options = ['price', 'rating'];
         filters.split(',').forEach((item) => {
             const [fields, operator, value] = item.split('-');
-            if(options.includes(fields)){
+            if (options.includes(fields)) {
                 queryObject[fields] = { [operator]: Number(value) };
             }
         })
