@@ -2,11 +2,9 @@ const { query } = require('express');
 const Product = require('../models/product');
 
 const getAllProductsStatic = async (req, res) => {
-    const products = await Product.find({})
-        .sort('name')
-        .select('name price')
-        .limit(10)
-        .skip(5);
+    const products = await Product.find({ price: { $gt: 30 } })
+        .sort('price')
+        .select('name price');
 
     const result = {
         count: products.length,
