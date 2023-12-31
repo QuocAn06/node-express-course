@@ -2,7 +2,7 @@ const { query } = require('express');
 const Product = require('../models/product');
 
 const getAllProductsStatic = async (req, res) => {
-    const products = await Product.find({}).sort('-name price');
+    const products = await Product.find({}).select('name price');
 
     const result = {
         count: products.length,
@@ -13,7 +13,7 @@ const getAllProductsStatic = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-    const { featured, company, name, sort } = req.query;
+    const { featured, company, name, sort, fields } = req.query;
     const queryObject = {};
 
     if (featured) {
@@ -30,16 +30,24 @@ const getAllProducts = async (req, res) => {
 
     console.log(queryObject);
     const result = Product.find(queryObject);
-    if(sort){
-        const sortList = sort.split (',').join(' ');
+
+    //sort
+    if (sort) {
+        const sortList = sort.split(',').join(' ');
         result.sort(sortList);
     }
-    else{
-        result = result.sort('creatAt');
+    else {
+        result.sort('createdAt');
+    }
+
+    //fields
+    if (fields) {
+        const fieldsList = fields.split(',').join(' ');
+        result.select(fieldsList);
     }
 
     const products = await result;
-    res.status(200).json({count: products.length, products});
+    res.status(200).json({ count: products.length, products });
 };
 
 module.exports = {
