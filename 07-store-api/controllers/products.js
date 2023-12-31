@@ -13,7 +13,7 @@ const getAllProductsStatic = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-    const { featured, company, name } = req.query;
+    const { featured, company, name, sort } = req.query;
     const queryObject = {};
 
     if (featured) {
@@ -29,13 +29,17 @@ const getAllProducts = async (req, res) => {
     }
 
     console.log(queryObject);
-    const products = await Product.find(queryObject);
-    const result = {
-        count: products.length,
-        products
+    const result = Product.find(queryObject);
+    if(sort){
+        const sortList = sort.split (',').join(' ');
+        result.sort(sortList);
+    }
+    else{
+        result = result.sort('creatAt');
     }
 
-    res.status(200).json(result);
+    const products = await result;
+    res.status(200).json({count: products.length, products});
 };
 
 module.exports = {
